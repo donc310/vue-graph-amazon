@@ -1,16 +1,16 @@
 <template>
   <graph-component :fileName="fileName">
-    <amazon-graph></amazon-graph>
+    <graph-app></graph-app>
     <template v-slot:logger></template>
     <template v-slot:copyRight></template>
   </graph-component>
 </template>
 <script>
-import AmazonGraph from "./components/app/graph_app";
+import GraphApp from "./components/app/App";
 export default {
   name: "CORE_APP",
   components: {
-    AmazonGraph
+    GraphApp
   },
   data() {
     return {

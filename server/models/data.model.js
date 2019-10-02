@@ -28,18 +28,17 @@ function handleQuery(query) {
                 return queryConfidence.indexOf(1) !== -1;
             })
             items = items.slice(0, (query.maxResults ? query.maxResults : 10))
-            //console.log("QUERY" ,query.query)
-            //console.log("ITEMS" ,items)
         }
 
         if (parseInt(query.related) === 1) {
-            //console.log("ITEMS :" ,items)
+            let searchItem = items.find((x)=>{
+                return x.id === `${query.relatedToItemId }`
+            })
+            if(searchItem.length === 0)searchItem.related = [];
             items = items.filter((item) => {
-                return item.related.indexOf(`${query.relatedToItemId }`) !== -1;
+                return searchItem.related.indexOf(item.id) !== -1
             })
             items = items.slice(0, (query.maxResults ? query.maxResults : 10))
-            //console.log("FIND :" ,query.relatedToItemId)
-            //console.log("ITEMS :" ,items)
         }
     } catch (err) {
         console.error(err)
@@ -50,7 +49,7 @@ function getEntries(query) {
     return new Promise((resolve, reject) => {
         if (items.length === 0) {
             reject({
-                message: 'No result found for query : ' + query.query,
+                message: 'No result found for query : ' + query.query?query.query:query.relatedToItemId,
                 status: 202
             })
         }

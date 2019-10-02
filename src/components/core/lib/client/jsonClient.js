@@ -34,9 +34,9 @@ function extractData(data) {
         info: data.info
     };
 }
-export default function (filename) {
-    let jsonFile = filename
-    const origin = 'api/v1/graphdata';
+export default function (request) {
+    let jsonFile = request.fileName
+    const origin = request.origin;
     function buildParameters(request) {
         request.fname = jsonFile
         return Object.keys(request).map(key => {

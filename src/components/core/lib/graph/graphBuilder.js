@@ -12,14 +12,12 @@ const similarPerRequest = 15;
  * @param {String} _type
  * 
  */
-export function buildGraph(searchTerm, _type) {
+export function buildGraph(searchTerm, request) {
     let root, client;
-    if (typeof _type === "string") client = ClientFactory.get(_type)
-    else if (typeof _type === "object") client = ClientFactory.make(_type)
     const graph = createGraph({ uniqueLinkIds: false });
     const progress = new ProgressToken();
     const loaded = new Set();
-
+    client = ClientFactory(request)
     client.search(searchTerm, (result) => {
         onSearchComplete(result.items && result.items[0], progress);
     }, () => {

@@ -71,9 +71,13 @@ export default {
   props: {
     fileName: {
       type: String,
-      required: true,
       default: "data"
-    }
+    },
+    client: {
+      type: String,
+      default: "json"
+    },
+    origin: { type: String, default: "api/v1/graphdata" }
   },
   data() {
     const searchString = qs.get("q") || "";
@@ -96,12 +100,7 @@ export default {
     qs.onChange(this.onQueryChange, this);
     this.startSearch();
   },
-  mounted() {
-    var vm = this;
-    EventBus.$on("CORE::NODE_SELECTED", nodeId => {
-      //
-    });
-  },
+  mounted() {},
   methods: {
     searchFormSubmitHandler(event) {
       if (event) event.preventDefault();
@@ -119,10 +118,19 @@ export default {
     },
     startSearch() {
       const q = qs.get("q");
+      let graphClient;
       if (!q) return;
       if (this.request) this.request.progress.cancel();
-      let graphType = { type: "json", filename: this.fileName };
-      this.request = buildGraph(q, graphType);
+      if (this.client != "json") {
+        graphClient = this.client;
+      } else {
+        graphClient = {
+          type: this.client,
+          fileName: this.fileName,
+          origin: this.origin
+        };
+      }
+      this.request = buildGraph(q, graphClient);
       this.request.progress.onProgress(msg => {
         this.logMessage = msg;
       });
