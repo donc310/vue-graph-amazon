@@ -13,7 +13,7 @@ function get(name) {
 }
 function make(obj) {
     if (obj.type && obj.type === "json") {
-        return obj.fileName && obj.origin ? JsonCient(obj) : null
+        return obj.fileName && obj.origin ?  new JsonCient(obj) : null
     }
     throw new Error('');
 
