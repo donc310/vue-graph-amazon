@@ -10,7 +10,7 @@ LINK : <a href="https://ngraph-amazon.herokuapp.com/#?q=books">https://ngraph-am
 
 
 ## HOW IT WORKS
-The app listens for the  `CORE::NODE_SELECTED`  `CORE::NODES_UPDATE` event emmitted by the main component to display a 
+The app listens for the  `CORE::NODE_SELECTED` and  `CORE::NODES_UPDATE` events emmitted by the main component to display a 
 
 list of Amazon products
 
